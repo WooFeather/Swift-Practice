@@ -9,27 +9,36 @@ import Foundation
 
 class PersonViewModel {
     
-    var inputLoadButtonTapped: Observable<Void> = Observable(())
+    var inputLoadButtonTapped = Observable(())
+    var inputResetButtonTapped = Observable(())
     
     // VC의 TV에 보여줄 데이터
-    var people: Observable<[Person]> = Observable([])
+    var person: Observable<[Person]> = Observable([])
     let navigationTitle = "Person List"
     let loadTitle = "로드버튼"
     let resetTitle = "리셋버튼"
     
     init() {
         inputLoadButtonTapped.bind { _ in
-            self.people.value = self.generateRandomPeople()
+            self.load()
+        }
+        
+        inputResetButtonTapped.bind { _ in
+            self.reset()
         }
     }
     
-    private func generateRandomPeople() -> [Person] {
-        return [
+    private func load() {
+        person.value = [
             Person(name: "James", age: Int.random(in: 20...70)),
             Person(name: "Mary", age: Int.random(in: 20...70)),
             Person(name: "John", age: Int.random(in: 20...70)),
             Person(name: "Patricia", age: Int.random(in: 20...70)),
             Person(name: "Robert", age: Int.random(in: 20...70))
         ]
+    }
+    
+    private func reset() {
+        person.value.removeAll()
     }
 }

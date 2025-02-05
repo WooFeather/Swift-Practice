@@ -59,6 +59,19 @@ class NumberViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         print("viewDidLoad")
+  
+        
+        // Field의 closure가 private이 아니라면?
+//        let a = Field("하이")
+//        var closure = a.closure
+//        closure = { text in
+//            print(text)
+//        }
+//        
+//        closure?("dd")
+//        closure?("cc")
+//        closure?("aa")
+        
         
         configureUI()
         configureConstraints()

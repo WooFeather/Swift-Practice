@@ -59,15 +59,7 @@ class PersonListViewController: UIViewController {
         setupConstraints()
         setupTableView()
         setupActions()
-        
-        navigationItem.title = viewModel.navigationTitle
-        loadButton.setTitle(viewModel.loadTitle, for: .normal)
-        resetButton.setTitle(viewModel.resetTitle, for: .normal)
-        
-        // 데이터가 변경이되면 tableView를 갱신
-        viewModel.people.bind { value in
-            self.tableView.reloadData()
-        }
+        bind()
     }
      
     private func setupUI() {
@@ -103,29 +95,37 @@ class PersonListViewController: UIViewController {
         resetButton.addTarget(self, action: #selector(resetButtonTapped), for: .touchUpInside)
     }
     
+    private func bind() {
+        navigationItem.title = viewModel.navigationTitle
+        loadButton.setTitle(viewModel.loadTitle, for: .normal)
+        resetButton.setTitle(viewModel.resetTitle, for: .normal)
+        
+        // 데이터가 변경이되면 tableView를 갱신
+        viewModel.person.bind { _ in
+            self.tableView.reloadData()
+        }
+    }
+    
     // MARK: - Actions
     @objc private func loadButtonTapped() {
         // 버튼을 클릭했다는 사실만 뷰모델에 정해주기
-        viewModel.inputLoadButtonTapped.value = (())
+        viewModel.inputLoadButtonTapped.value = ()
     }
     
     @objc private func resetButtonTapped() {
-        viewModel.people.value.removeAll()
-        tableView.reloadData()
+        viewModel.inputResetButtonTapped.value = ()
     }
-    
-    // MARK: - Helpers
-    
 }
 
+// MARK: - Helpers
 extension PersonListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.people.value.count
+        return viewModel.person.value.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PersonCell", for: indexPath)
-        let person = viewModel.people.value[indexPath.row]
+        let person = viewModel.person.value[indexPath.row]
         cell.textLabel?.text = "\(person.name), \(person.age)세"
         return cell
     }

@@ -9,7 +9,7 @@ import Foundation
 
 class Observable<T> {
     
-    var closure: ((T) -> Void)?
+    private var closure: ((T) -> Void)?
     
     var value: T {
         didSet {
@@ -23,6 +23,10 @@ class Observable<T> {
      
     func bind(closure: @escaping (T) -> Void) {
         closure(value)
+        self.closure = closure
+    }
+    
+    func lazyBind(closure: @escaping (T) -> Void) {
         self.closure = closure
     }
 }
