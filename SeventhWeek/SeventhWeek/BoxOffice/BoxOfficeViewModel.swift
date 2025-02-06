@@ -59,6 +59,7 @@ class BoxOfficeViewModel {
             case .success(let success):
                 dump(success.boxOfficeResult.dailyBoxOfficeList)
                 self.outputBoxOffice.value = success.boxOfficeResult.dailyBoxOfficeList
+                print("=====")
             case .failure(let failure):
                 print(failure)
             }

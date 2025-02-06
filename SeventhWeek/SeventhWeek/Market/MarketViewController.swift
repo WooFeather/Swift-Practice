@@ -59,6 +59,8 @@ final class MarketViewController: UIViewController {
             vc.viewModel.outputOneMarket.value = data?.korean_name
 //            vc.viewModel.outputOneMarket.value = self.viewModel.outputDetailMarket.value
             self.navigationController?.pushViewController(vc, animated: true)
+            
+//            self.navigationController?.pushViewController(EmptyViewController(), animated: true)
         }
     }
 }
