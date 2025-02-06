@@ -17,15 +17,17 @@ final class MarketDetailViewController: UIViewController {
         configureView()
         bindData()
     }
-
-    private func configureView() {
-        view.backgroundColor = .lightGray
-    }
     
     private func bindData() {
         viewModel.outputOneMarket.bind { market in
             print("outputOneMarket bind")
-            self.navigationItem.title = market?.korean_name ?? "마켓 없음"
+            self.navigationItem.title = market
         }
+    }
+}
+
+extension MarketDetailViewController {
+    private func configureView() {
+        view.backgroundColor = .lightGray
     }
 }

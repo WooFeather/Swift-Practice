@@ -8,7 +8,7 @@
 import Foundation
 
 final class MarketDetailViewModel {
-    var outputOneMarket: Observable<Market?> = Observable(nil)
+    var outputOneMarket: Observable<String?> = Observable(nil)
     
     init() {
         print("MarketDetailViewModel init")

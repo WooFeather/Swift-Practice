@@ -56,7 +56,7 @@ final class MarketViewController: UIViewController {
             
             let vc = MarketDetailViewController()
 //            vc.navigationItem.title = self.viewModel.inputCellTitle.value
-            vc.viewModel.outputOneMarket.value = data
+            vc.viewModel.outputOneMarket.value = data?.korean_name
 //            vc.viewModel.outputOneMarket.value = self.viewModel.outputDetailMarket.value
             self.navigationController?.pushViewController(vc, animated: true)
         }
