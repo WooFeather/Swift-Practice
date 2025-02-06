@@ -43,8 +43,18 @@ class PersonListViewController: UIViewController {
         return button
     }()
     
+    private let addButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Add", for: .normal)
+        button.backgroundColor = .systemGreen
+        button.setTitleColor(.white, for: .normal)
+        button.layer.cornerRadius = 8
+        button.titleLabel?.font = .systemFont(ofSize: 16, weight: .bold)
+        return button
+    }()
+    
     private lazy var buttonStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [loadButton, resetButton])
+        let stackView = UIStackView(arrangedSubviews: [loadButton, resetButton, addButton])
         stackView.axis = .horizontal
         stackView.spacing = 16
         stackView.distribution = .fillEqually
@@ -93,6 +103,7 @@ class PersonListViewController: UIViewController {
     private func setupActions() {
         loadButton.addTarget(self, action: #selector(loadButtonTapped), for: .touchUpInside)
         resetButton.addTarget(self, action: #selector(resetButtonTapped), for: .touchUpInside)
+        addButton.addTarget(self, action: #selector(addButtonTapped), for: .touchUpInside)
     }
     
     private func bind() {
@@ -101,7 +112,7 @@ class PersonListViewController: UIViewController {
         resetButton.setTitle(viewModel.resetTitle, for: .normal)
         
         // 데이터가 변경이되면 tableView를 갱신
-        viewModel.person.bind { _ in
+        viewModel.people.bind { _ in
             self.tableView.reloadData()
         }
     }
@@ -115,17 +126,21 @@ class PersonListViewController: UIViewController {
     @objc private func resetButtonTapped() {
         viewModel.inputResetButtonTapped.value = ()
     }
+    
+    @objc private func addButtonTapped() {
+
+    }
 }
 
 // MARK: - Helpers
 extension PersonListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.person.value.count
+        return viewModel.people.value.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PersonCell", for: indexPath)
-        let person = viewModel.person.value[indexPath.row]
+        let person = viewModel.people.value[indexPath.row]
         cell.textLabel?.text = "\(person.name), \(person.age)세"
         return cell
     }

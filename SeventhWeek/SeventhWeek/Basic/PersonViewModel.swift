@@ -13,7 +13,7 @@ class PersonViewModel {
     var inputResetButtonTapped = Observable(())
     
     // VC의 TV에 보여줄 데이터
-    var person: Observable<[Person]> = Observable([])
+    var people: Observable<[Person]> = Observable([])
     let navigationTitle = "Person List"
     let loadTitle = "로드버튼"
     let resetTitle = "리셋버튼"
@@ -29,7 +29,7 @@ class PersonViewModel {
     }
     
     private func load() {
-        person.value = [
+        people.value = [
             Person(name: "James", age: Int.random(in: 20...70)),
             Person(name: "Mary", age: Int.random(in: 20...70)),
             Person(name: "John", age: Int.random(in: 20...70)),
@@ -39,6 +39,6 @@ class PersonViewModel {
     }
     
     private func reset() {
-        person.value.removeAll()
+        people.value.removeAll()
     }
 }
