@@ -9,9 +9,11 @@
 /* Begin PBXBuildFile section */
 		793060882D50698B00D61972 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 793060872D50698B00D61972 /* SnapKit */; };
 		793061C12D508F9100D61972 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 793061C02D508F9100D61972 /* Alamofire */; };
+		796DF7C32D54786A006A4427 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 796DF7C22D54786A006A4427 /* .gitignore */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		796DF7C22D54786A006A4427 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		79C6267C2D5044DF008416F8 /* SeventhWeek.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SeventhWeek.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -52,6 +54,7 @@
 		79C626732D5044DF008416F8 = {
 			isa = PBXGroup;
 			children = (
+				796DF7C22D54786A006A4427 /* .gitignore */,
 				79C6267E2D5044DF008416F8 /* SeventhWeek */,
 				79C6267D2D5044DF008416F8 /* Products */,
 			);
@@ -135,6 +138,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				796DF7C32D54786A006A4427 /* .gitignore in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
