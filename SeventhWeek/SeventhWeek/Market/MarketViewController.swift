@@ -45,6 +45,21 @@ final class MarketViewController: UIViewController {
         viewModel.outputTitle.bind { text in
             self.navigationItem.title = text
         }
+        
+        viewModel.outputCellSelected.bind { data in
+            print("outputCellSelected bind")
+            
+            guard data != nil else {
+                print("nil이라 화면전환 되면 안됨")
+                return
+            }
+            
+            let vc = MarketDetailViewController()
+//            vc.navigationItem.title = self.viewModel.inputCellTitle.value
+            vc.viewModel.outputOneMarket.value = data
+//            vc.viewModel.outputOneMarket.value = self.viewModel.outputDetailMarket.value
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
     }
 }
 
@@ -62,8 +77,13 @@ extension MarketViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print(#function)
+//        let cell = tableView.dequeueReusableCell(withIdentifier: "MarketCell", for: indexPath)
+        let data = viewModel.outputMarket.value[indexPath.row]
+        
+//        viewModel.inputDetailMarket.value = data
+        viewModel.inputCellSelected.value = data
+//        viewModel.inputCellTitle.value = data.korean_name
     }
-    
 }
 
 extension MarketViewController: UISearchBarDelegate {
@@ -89,6 +109,4 @@ extension MarketViewController {
             make.edges.equalToSuperview()
         }
     }
-
-    
 }
