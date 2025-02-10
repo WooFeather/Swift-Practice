@@ -10,26 +10,39 @@ import Alamofire
 
 class BoxOfficeViewModel {
     
-    let inputSelectedDate: Observable<Date> = Observable(Date())
-    let inputSearchButtonTapped: Observable<Void?> = Observable(nil)
+    private(set) var input: Input
+    private(set) var output: Output
     
-    // 변환한 날짜를 내보낼 객체
-    let outputSelectDate: Observable<String> = Observable("")
+    struct Input {
+        let selectedDate: Observable<Date> = Observable(Date())
+        let searchButtonTapped: Observable<Void?> = Observable(nil)
+    }
     
-    let outputBoxOffice: Observable<[Movie]> = Observable([])
+    struct Output {
+        // 변환한 날짜를 내보낼 객체
+        let selectDate: Observable<String> = Observable("")
+        let boxOffice: Observable<[Movie]> = Observable([])
+    }
     
     // VM과 VC 사이를 왔다갔다 하는 애가 아님
     private var query = ""
      
     init() {
         print("BoxOfficeViewModel Init")
+        
+        input = Input()
+        output = Output()
          
-        inputSelectedDate.bind { date in
+        transform()
+    }
+    
+    private func transform() {
+        input.selectedDate.bind { date in
             print("inputSelectedDate bind")
             self.convertDate(date: date)
         }
         
-        inputSearchButtonTapped.bind { _ in
+        input.searchButtonTapped.bind { _ in
             self.callBoxOffice(date: self.query)
             print("=====", self.query)
         }
@@ -43,7 +56,7 @@ class BoxOfficeViewModel {
         let format = DateFormatter()
         format.dateFormat = "yy년 MM월 dd일"
         let string = format.string(from: date)
-        outputSelectDate.value = string
+        output.selectDate.value = string
         
         let format2 = DateFormatter()
         format2.dateFormat = "yyyyMMdd"
@@ -58,7 +71,7 @@ class BoxOfficeViewModel {
             switch response.result {
             case .success(let success):
                 dump(success.boxOfficeResult.dailyBoxOfficeList)
-                self.outputBoxOffice.value = success.boxOfficeResult.dailyBoxOfficeList
+                self.output.boxOffice.value = success.boxOfficeResult.dailyBoxOfficeList
                 print("=====")
             case .failure(let failure):
                 print(failure)
