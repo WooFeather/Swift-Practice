@@ -7,7 +7,7 @@
 
 import Foundation
 
-class UserViewModel {
+class UserViewModel: BaseViewModel {
     
     private(set) var input: Input
     private(set) var output: Output

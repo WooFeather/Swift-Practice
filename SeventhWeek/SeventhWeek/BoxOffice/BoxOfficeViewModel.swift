@@ -8,7 +8,7 @@
 import Foundation
 import Alamofire
 
-class BoxOfficeViewModel {
+class BoxOfficeViewModel: BaseViewModel {
     
     private(set) var input: Input
     private(set) var output: Output
@@ -36,7 +36,7 @@ class BoxOfficeViewModel {
         transform()
     }
     
-    private func transform() {
+    func transform() {
         input.selectedDate.bind { date in
             print("inputSelectedDate bind")
             self.convertDate(date: date)
