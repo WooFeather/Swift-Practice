@@ -34,17 +34,17 @@ class Test: Mentor {
 
 // 구체적으로 명세할 경우 typealias 필요 X
 // 구체적으로 명세하지 않는다면 typealias로 별칭 설정
-class Sample: BaseViewModel {
-    
-    struct Input {
-        
-    }
-    
-    struct Output {
-        
-    }
-    
-    func transform() {
-        <#code#>
-    }
-}
+//class Sample: BaseViewModel {
+//    
+//    struct Input {
+//        
+//    }
+//    
+//    struct Output {
+//        
+//    }
+//    
+//    func transform() {
+//        <#code#>
+//    }
+//}

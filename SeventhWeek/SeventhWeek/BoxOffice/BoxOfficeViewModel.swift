@@ -43,7 +43,7 @@ class BoxOfficeViewModel: BaseViewModel {
         }
         
         input.searchButtonTapped.bind { _ in
-            self.callBoxOffice(date: self.query)
+            self.callBoxOffice2(date: self.query)
             print("=====", self.query)
         }
     }
@@ -62,6 +62,41 @@ class BoxOfficeViewModel: BaseViewModel {
         format2.dateFormat = "yyyyMMdd"
         let query = format2.string(from: date)
         self.query = query
+    }
+    
+    private func callNasaAPI() {
+        
+    }
+    
+    private func callBoxOffice2(date: String) {
+        print(#function)
+        let url = "https://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=\(APIKey.kobisAPIKey)&targetDt=\(date)"
+        
+        let request = URLRequest(url: URL(string: url)!)
+        
+        print("===1: \(Thread.isMainThread)")
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            print("===2: \(Thread.isMainThread)")
+            if let _ = error {
+                print("오류 발생!")
+                return
+            }
+            
+            guard let response = response as? HTTPURLResponse,
+                  (200..<300).contains(response.statusCode) else {
+                print("여기에서 상태코드 대응")
+                return
+            }
+            
+            // Data타입 -> Decoding
+            if let data = data,
+               let movieData = try? JSONDecoder().decode(BoxOfficeResult.self, from: data) {
+                dump(movieData)
+                self.output.boxOffice.value = movieData.boxOfficeResult.dailyBoxOfficeList
+            } else {
+                print("data가 없거나 movie decoding을 실패")
+            }
+        }.resume()
     }
     
     private func callBoxOffice(date: String) {

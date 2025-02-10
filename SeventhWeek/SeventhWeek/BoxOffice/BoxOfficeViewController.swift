@@ -59,7 +59,9 @@ final class BoxOfficeViewController: UIViewController {
         }
         
         viewModel.output.boxOffice.lazyBind { _ in
-            self.tableView.reloadData()
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
         }
     }
     
