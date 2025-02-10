@@ -1,13 +1,13 @@
 //
-//  PersonViewModel.swift
-//  SeventhWeek
+//  UserViewModel.swift
+//  SeSACSevenWeek
 //
-//  Created by 조우현 on 2/5/25.
+//  Created by Jack on 2/5/25.
 //
 
 import Foundation
 
-class PersonViewModel {
+class UserViewModel {
     
     private(set) var input: Input
     private(set) var output: Output
@@ -18,28 +18,26 @@ class PersonViewModel {
     }
     
     struct Output {
-        let people: Observable<[Person]> = Observable([])
-        let navigationTitle = "Person List"
-        let loadTitle = "로드버튼"
-        let resetTitle = "리셋버튼"
+        let person: Observable<[Person]> = Observable([])
     }
-    
     
     init() {
         input = Input()
         output = Output()
-        
+        transform()
+    }
+    
+    func transform() {
         input.loadTapped.bind { _ in
             self.load()
         }
-        
         input.resetTapped.bind { _ in
             self.reset()
         }
     }
     
     private func load() {
-        output.people.value = [
+        output.person.value = [
             Person(name: "James", age: Int.random(in: 20...70)),
             Person(name: "Mary", age: Int.random(in: 20...70)),
             Person(name: "John", age: Int.random(in: 20...70)),
@@ -49,6 +47,7 @@ class PersonViewModel {
     }
     
     private func reset() {
-        output.people.value.removeAll()
+        output.person.value.removeAll()
     }
+    
 }

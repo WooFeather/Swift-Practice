@@ -79,13 +79,13 @@ class NumberViewController: UIViewController {
         
         // bind는 didSet의 동작을 한다고 생각하면 됨
         // outputText 값이 바뀌면 어떤 동작을 할거야?
-        viewModel.outputText.bind { text in
+        viewModel.output.text.bind { text in
             print("outputText", text)
             self.formattedAmountLabel.text = text
         }
         
         // 받아온 Bool값을 통해 textColor를 지정
-        viewModel.outputTextColor.bind { color in
+        viewModel.output.textColor.bind { color in
             self.formattedAmountLabel.textColor = color ? .blue : .red
         }
     }
@@ -94,7 +94,7 @@ class NumberViewController: UIViewController {
         print(#function)
         
         // VC는 text를 그냥 VM로 넘겨줄 뿐, 그 안에서의 동작은 알 지 못함
-        viewModel.inputField.value = amountTextField.text
+        viewModel.input.field.value = amountTextField.text
     }
 }
 

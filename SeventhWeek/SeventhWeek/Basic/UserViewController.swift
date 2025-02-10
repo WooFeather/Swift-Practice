@@ -1,5 +1,5 @@
 //
-//  PersonViewController.swift
+//  UserViewController.swift
 //  SeSACSevenWeek
 //
 //  Created by Jack on 2/5/25.
@@ -8,14 +8,8 @@
 import UIKit
 import SnapKit
 
-struct Person {
-    let name: String
-    let age: Int
-}
-
-class PersonListViewController: UIViewController {
-    // MARK: - Properties
-    
+class UserViewController: UIViewController {
+  
     private let tableView: UITableView = {
         let table = UITableView()
         table.rowHeight = 60
@@ -25,7 +19,7 @@ class PersonListViewController: UIViewController {
     
     private let loadButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("Load 10 People", for: .normal)
+        button.setTitle("Load", for: .normal)
         button.backgroundColor = .systemBlue
         button.setTitleColor(.white, for: .normal)
         button.layer.cornerRadius = 8
@@ -61,7 +55,7 @@ class PersonListViewController: UIViewController {
         return stackView
     }()
     
-    private let viewModel = PersonViewModel()
+    let viewModel = UserViewModel()
      
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,6 +64,12 @@ class PersonListViewController: UIViewController {
         setupTableView()
         setupActions()
         bind()
+    }
+    
+    private func bind() {
+        viewModel.output.person.bind { _ in
+            self.tableView.reloadData()
+        }
     }
      
     private func setupUI() {
@@ -105,21 +105,8 @@ class PersonListViewController: UIViewController {
         resetButton.addTarget(self, action: #selector(resetButtonTapped), for: .touchUpInside)
         addButton.addTarget(self, action: #selector(addButtonTapped), for: .touchUpInside)
     }
-    
-    private func bind() {
-        navigationItem.title = viewModel.output.navigationTitle
-        loadButton.setTitle(viewModel.output.loadTitle, for: .normal)
-        resetButton.setTitle(viewModel.output.resetTitle, for: .normal)
-        
-        // 데이터가 변경이되면 tableView를 갱신
-        viewModel.output.people.bind { _ in
-            self.tableView.reloadData()
-        }
-    }
-    
-    // MARK: - Actions
+     
     @objc private func loadButtonTapped() {
-        // 버튼을 클릭했다는 사실만 뷰모델에 정해주기
         viewModel.input.loadTapped.value = ()
     }
     
@@ -131,16 +118,15 @@ class PersonListViewController: UIViewController {
 
     }
 }
-
-// MARK: - Helpers
-extension PersonListViewController: UITableViewDelegate, UITableViewDataSource {
+ 
+extension UserViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.output.people.value.count
+        return viewModel.output.person.value.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PersonCell", for: indexPath)
-        let person = viewModel.output.people.value[indexPath.row]
+        let person = viewModel.output.person.value[indexPath.row]
         cell.textLabel?.text = "\(person.name), \(person.age)세"
         return cell
     }
