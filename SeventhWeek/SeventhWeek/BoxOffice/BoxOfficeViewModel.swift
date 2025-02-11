@@ -88,7 +88,8 @@ class BoxOfficeViewModel: BaseViewModel {
                 return
             }
             
-            // Data타입 -> Decoding
+            // do try catch - error handling
+            // server > client Data타입 -> Decoding
             if let data = data,
                let movieData = try? JSONDecoder().decode(BoxOfficeResult.self, from: data) {
                 dump(movieData)
