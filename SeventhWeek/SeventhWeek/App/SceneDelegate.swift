@@ -36,10 +36,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         UNUserNotificationCenter.current().setBadgeCount(0)
         
         // 사용자에게 전달되어 있는 알람 제거
-        UNUserNotificationCenter.current().removeAllDeliveredNotifications()
+        // UNUserNotificationCenter.current().removeAllDeliveredNotifications()
         
         // 사용자에게 아직 전달되지 않았지만, 앞으로 전달될 알람을 제거
-        UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+        // UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
     }
 
     func sceneWillResignActive(_ scene: UIScene) {

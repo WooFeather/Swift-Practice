@@ -49,4 +49,14 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         // 포그라운드에서의 옵션
         completionHandler([.banner, .badge, .list])
     }
+    
+    // 알림을 사용자가 클릭했는지 알 수 있는 메서드
+    // ex. 카카오톡 특정 채팅방으로 이동, 쿠팡 해당 상품 페이지로 이동
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        print(#function)
+        print(response.notification.request.content.title) // Identifier 의미 확인해보기
+        print(response.notification.request.content.subtitle) // 5199
+        print(response.notification.request.content.userInfo)
+        print(response.notification.request.content.userInfo["type"] as? Int)
+    }
 }

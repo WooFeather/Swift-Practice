@@ -14,6 +14,10 @@ import SnapKit
  - 반복 기능의 경우 TimeIntervar은 최소 60초를 넘어야 함
  - 알림센터에 알림 스택 기준은 identifier. 각 알림의 고유값을 의미
  - 배지 숫자는 알림 개수와 무관. 일일이 관리 해줘야 함
+ 
+ - 알림센터에 보이고 있는지, 사용자에게 전달되었는지 알 수 없음
+ - 단, 사용자가 알림을 클릭했을 때만 확인 가능
+ - identifier: 고유값 / 64개 제한
  */
 class NotificationViewController: UIViewController {
     
@@ -40,13 +44,20 @@ class NotificationViewController: UIViewController {
         print(#function)
         
         let content = UNMutableNotificationContent()
-        content.title = "Identifier 의미 확인해보기: 동일한 Identifier일 경우"
+        content.title = "테스트 userinfo 활용"
         content.subtitle = "\(Int.random(in: 1...10000))"
         content.badge = 22
+        content.userInfo = ["type": 2, "id": 256423]
         
-        // 1) 시간 간격
-         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 3, repeats: false)
+        // 1) 시간 간격 3) 위치 기반 -> 알아서 찾아보기
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 10, repeats: false)
     
+        let request = UNNotificationRequest(identifier: "woo \(Date())", content: content, trigger: trigger)
+        
+        UNUserNotificationCenter.current().add(request) { error in
+            print(error ?? "에러없음")
+        }
+        
         // 2) 캘린더 기반
         
         //        var components = DateComponents()
@@ -54,12 +65,13 @@ class NotificationViewController: UIViewController {
         
 //        let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: false)
         
-        // 3) 위치기반 => 알아서 찾아보기
-    
-        let request = UNNotificationRequest(identifier: "\(Date())", content: content, trigger: trigger)
-        
-        UNUserNotificationCenter.current().add(request) { error in
-            print(error ?? "에러없음")
-        }
+        // 요청을 반복해서 하기
+//        for item in 1...70 {
+//            let request = UNNotificationRequest(identifier: "woo \(item)", content: content, trigger: trigger)
+//            
+//            UNUserNotificationCenter.current().add(request) { error in
+//                print(error ?? "에러없음")
+//            }
+//        }
     }
 }
