@@ -19,6 +19,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print(success, error)
         }
         
+        // Notification 2. 포그라운드 수신을 위한 Delegate 설정
+        UNUserNotificationCenter.current().delegate = self
+        
         return true
     }
 
@@ -39,3 +42,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 }
 
+extension AppDelegate: UNUserNotificationCenterDelegate {
+    // Notification 2. 포그라운드 수신
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        
+        // 포그라운드에서의 옵션
+        completionHandler([.banner, .badge, .list])
+    }
+}
